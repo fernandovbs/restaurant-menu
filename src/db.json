@@ -1,0 +1,27 @@
+{
+    "categorias": [{
+            "id": 1,
+            "title": "Sanduíches",
+            "image": "./static/media/sanduiches.jpg"
+        },
+        {
+            "id": 2,
+            "title": "Pizzas salgadas",
+            "image": "./static/media/pizzas-salgadas.jpg"
+        },
+        {
+            "id": 3,
+            "title": "Pizzas doces"
+        },
+        {
+            "id": 4,
+            "title": "Bebidas",
+            "image": "./static/media/bebidas.jpg"
+        },
+        {
+            "id": 5,
+            "title": "Combos"
+        }
+    ],
+    "produtos": []
+}
