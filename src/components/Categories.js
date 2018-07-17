@@ -14,7 +14,7 @@ const CategoriesList = ({categories}) =>
 const Category = ({category}) => {
 
     return (<div className='Category-item'>
-        <img src={category.image ? require(`${category.image}`) : logo} alt={category.title} />
+        <img src={category.image ? category.image: logo} alt={category.title} />
         <div className='Category-title'>
             <h4>{category.name}</h4>         
         </div>

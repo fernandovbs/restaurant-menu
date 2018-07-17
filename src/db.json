@@ -2,12 +2,12 @@
     "categorias": [{
             "id": 1,
             "title": "Sanduíches",
-            "image": "./static/media/sanduiches.jpg"
+            "image": "images/categorias/sanduiches.jpg"
         },
         {
             "id": 2,
             "title": "Pizzas salgadas",
-            "image": "./static/media/pizzas-salgadas.jpg"
+            "image": "images/categorias/pizzas-salgadas.jpg"
         },
         {
             "id": 3,
@@ -16,7 +16,7 @@
         {
             "id": 4,
             "title": "Bebidas",
-            "image": "./static/media/bebidas.jpg"
+            "image": "images/categorias/bebidas.jpg"
         },
         {
             "id": 5,
