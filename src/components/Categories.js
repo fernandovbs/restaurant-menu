@@ -14,9 +14,9 @@ const CategoriesList = ({categories}) =>
 const Category = ({category}) => {
 
     return (<div className='Category-item'>
-        <img src={category.image ? category.image: logo} alt={category.title} />
+        {category.image && <img src={category.image} alt={category.title} />}
         <div className='Category-title'>
-            <h4>{category.name}</h4>         
+            <h1>{category.title}</h1>         
         </div>
     </div>)
 }

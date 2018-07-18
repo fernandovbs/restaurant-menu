@@ -2,21 +2,22 @@
     "categorias": [{
             "id": 1,
             "title": "Sanduíches",
-            "image": "images/categorias/sanduiches.jpg"
+            "image": "images/categorias/sanduiches.png"
         },
         {
             "id": 2,
             "title": "Pizzas salgadas",
-            "image": "images/categorias/pizzas-salgadas.jpg"
+            "image": "images/categorias/pizzas-salgadas.png"
         },
         {
             "id": 3,
-            "title": "Pizzas doces"
+            "title": "Pizzas doces",
+            "image": "images/categorias/pizzas-doces.png"
         },
         {
             "id": 4,
             "title": "Bebidas",
-            "image": "images/categorias/bebidas.jpg"
+            "image": "images/categorias/bebidas.png"
         },
         {
             "id": 5,

@@ -16,13 +16,31 @@
 }
 
 .Category-title {
-  display: inline;
-  align-self: center;  
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Category-title h1 {
+  font-size: 4em;
+  color:#fff;
+}
+
+.Category-item {
+  background-color: #940114;
+  height: 320px;
+  overflow: hidden;
+  margin-top: 5px;
 }
 
 .Category-item img{
+  opacity: 0.7;
   width:100%;
 }
+
 .App-intro {
   font-size: large;
 }

@@ -28,7 +28,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className='container fixed-width'>
         <Header logo={logo} />
         <div className='content'>
           <Categories data={this.state.categorias} />
