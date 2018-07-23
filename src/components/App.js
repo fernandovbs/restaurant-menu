@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import logo from './../images/logo.png';
 import './../App.css';
+import { BrowserRouter as Router } from "react-router-dom"
+
 import Header from './Header'
 import apis from './../Apis'
-
 import Categories from './Categories'
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      'categorias': []
+      'categorias': [],
+      'produtos': []
     }
-    this.getCategories = this.getCategories.bind(this)
   }
 
   componentDidMount(){
@@ -26,14 +27,21 @@ class App extends Component {
     })
   }
 
+  getProducts = (catId) => {
+    apis.getProdutos(catId)
+    .then(resp => {
+      this.setState({produtos: resp.data})
+    })
+  }  
+
   render() {
     return (
-      <div className='container fixed-width'>
-        <Header logo={logo} />
-        <div className='content'>
-          <Categories data={this.state.categorias} />
+      <Router>
+        <div className='container fixed-width'>
+          <Header logo={logo} />
+            <Categories data={this.state.categorias} getProducts={this.getProducts} products={this.state.produtos}/>
         </div>
-      </div>
+      </Router>
     )
   }
 }

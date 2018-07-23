@@ -1,8 +1,9 @@
 import React from 'react'
 
 const LoadReady = (Component) => {
-    const loadReady = ({...data}) => { 
-        return data.data.length > 0 ? <Component data={data.data} /> : <p>Loading...</p>
+    const loadReady = (props) => { 
+        const {data} = props
+        return data.length > 0 ? <Component {...props} /> : <p>Loading...</p>
     } 
     return loadReady
 }

@@ -10,6 +10,8 @@ const apis = {
     deleteCategoria : catId => api.delete(`categorias/${catId}`),
     postCategoria: categoria => api.post('categorias', categoria),
     editCategoria: categoria => api.put(`categorias/${categoria.id}`, categoria),
+
+    getProdutos : (categoria) => api.get(`produtos?category=${categoria}`),
 }
 
 export default apis
