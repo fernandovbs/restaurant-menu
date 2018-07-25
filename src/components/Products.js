@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import LoadReady from './LoadReady'
 
-const Product = (product) => {
-    return (<div>
-            <h1>{product.title}</h1>
-            
-            {console.log(product)}
+const Product = ({product}) => {
+    return (<div className='Product-item col-md-4 col-sm-12'>        
+                <h4 className='text-center'>{product.title}</h4>
+                <div className='row'>
+                    <div className='col-md-8 col-sm-12'>
+                        <p className='ingredients'>{product.ingredients}</p>
+                    </div>
+                    <div className='col-md-4 col-sm-12'>
+                        {product.price && <p className="price">R$ {product.price}</p>}
+                    </div>
+                </div>
         </div>)
 }
 
@@ -20,6 +26,7 @@ class Products extends Component {
 
     render(){
         const {products} = this.props
+
         return (<div className='row'>
                 {products.length ? <ProductsList products={products} /> : <p>Nenhum produto cadastrado!</p>}
             </div>)

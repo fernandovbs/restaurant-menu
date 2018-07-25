@@ -41,6 +41,21 @@
   width:100%;
 }
 
+.Product-item {
+  border: 1px solid #CCC;
+}
+
+.Product-item p.price{
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1.2em;
+}
+.Product-item p.ingredients{
+  font-size: 0.8em;
+}
+
 .App-intro {
   font-size: large;
 }
