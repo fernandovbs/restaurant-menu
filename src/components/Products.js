@@ -19,14 +19,21 @@ const Product = ({product}) => {
 const ProductsList = ({products}) => products.map( product => <Product product={product} key={product.id} /> )
 
 class Products extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            'produtos': []
+        }
+    }
+
     componentDidMount() {
-        const {match, getProducts} = this.props
-        getProducts(match.params.catId)     
+        const {match} = this.props
+        
+        //getProducts(match.params.catId)     
     }
 
     render(){
-        const {products} = this.props
-
+        const products = []
         return (<div className='row'>
                 {products.length ? <ProductsList products={products} /> : <p>Nenhum produto cadastrado!</p>}
             </div>)

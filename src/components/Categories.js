@@ -25,14 +25,13 @@ const Category = ({match, category}) => {
 }
 
 class Categories extends Component {
+
     render(){
         const { data } = this.props
         return (
             <div className='content'>
                 <Route path='/' exact render={ props => <CategoriesList {...props} categories={data} /> } />
-                <Route path='/categorias/:catId' render={ props => 
-                    <Products {...props} getProducts={this.props.getProducts} products={this.props.products} /> }
-                />
+                <Route path='/categorias/:catId' component={Products} />
             </div>)
     }
 }
