@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import LoadReady from './LoadReady'
+import * as firebase from 'firebase'
 
 const Product = ({product}) => {
     return (<div className='Product-item col-md-4 col-sm-12'>        
@@ -28,14 +27,26 @@ class Products extends Component {
 
     componentDidMount() {
         const {match} = this.props
-        
+        const rootRef = firebase.database().ref().child('produtos')
+        rootRef.on('value', snap => {
+            const produtos = snap.val()
+            this.setState({
+                produtos: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
+                    {
+                        produtos[produtoId].category == match.params.catId && produtosCategoria.push(produtos[produtoId])
+                        return produtosCategoria
+                    }, 
+                [])
+          })
+          console.log(this.state.produtos)
+        })
+
         //getProducts(match.params.catId)     
     }
 
     render(){
-        const products = []
         return (<div className='row'>
-                {products.length ? <ProductsList products={products} /> : <p>Nenhum produto cadastrado!</p>}
+                {this.state.produtos.length ? <ProductsList products={this.state.produtos} /> : <p>Nenhum produto cadastrado!</p>}
             </div>)
     }
 }

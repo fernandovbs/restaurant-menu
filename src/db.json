@@ -1,64 +1,75 @@
 {
-    "categorias": [{
+    "categorias": {
+        "sanduiches":{
             "id": 1,
             "title": "Sanduíches",
             "image": "images/categorias/sanduiches.png"
         },
-        {
+        "pizzas-salgadas":{
             "id": 2,
             "title": "Pizzas salgadas",
             "image": "images/categorias/pizzas-salgadas.png"
         },
-        {
+        "pizzas-doces":{
             "id": 3,
             "title": "Pizzas doces",
             "image": "images/categorias/pizzas-doces.png"
         },
-        {
+        "bebidas":{
             "id": 4,
             "title": "Bebidas",
             "image": "images/categorias/bebidas.png"
         },
-        {
+        "combos":{
             "id": 5,
             "title": "Combos"
         }
-    ],
-    "produtos": [{
+    },
+    "produtos": {
+        "x-burguer-frango":{
             "id": 1,
             "category": 1,
             "title": "X-burguer de Frango",
             "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             "ingredients": "Pão bola, Hamburguer de Frango, Salada",
             "price": "10.00",
-            "variations": [{
-                        "title": "Pizza Grande",
-                        "price": "20.00"
-                    },
-                    {
+            "variations": 
+            {
+                "1": {
+                    "title": "Pizza Grande",
+                    "price": "20.00"
+                },
+                "2": {
                         "title": "Pizza Média",
                         "price": "18.00"
-                    },{
+                },
+                "3": {
                         "title": "Pizza Família",
                         "price": "25.00"
-                    }]
-            },{
+                }
+            }
+        },
+        "pizza-frango": {
             "id": 2,
             "category": 2,
             "title": "Pizza de Frango",
             "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             "ingredients": "Massa de Tomate, Frango, Catupiry, Queijo Mussarela, Milho",
-            "variations": [{
-                "title": "Pizza Grande",
-                "price": "20.00"
-            },
+            "variations": 
             {
-                "title": "Pizza Média",
-                "price": "18.00"
-            },{
-                "title": "Pizza Família",
-                "price": "25.00"
-            }]
+                "1": {
+                    "title": "Pizza Grande",
+                    "price": "20.00"
+                },
+                "2": {
+                        "title": "Pizza Média",
+                        "price": "18.00"
+                },
+                "3": {
+                        "title": "Pizza Família",
+                        "price": "25.00"
+                }
+            }
         }
-    ]
+    }
 }

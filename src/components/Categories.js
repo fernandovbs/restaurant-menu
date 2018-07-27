@@ -5,9 +5,9 @@ import Products from './Products'
 
 const CategoriesList = ({categories}) => 
     <div className='row'>
-        {categories.map(category => 
-          <div className='col-6' key={category.id}>
-            <Category category={category} />
+        {Object.keys(categories).map(categoryId => 
+          <div className='col-6' key={categories[categoryId].id}>
+            <Category category={categories[categoryId]} />
           </div>  
         )}
     </div>
