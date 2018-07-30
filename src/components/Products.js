@@ -31,6 +31,7 @@ class Products extends Component {
     }
 
     render(){
+        console.log(this.props.products)
         return (<div className='row'>
                 {Object.keys(this.props.products).length ? <ProductsList products={this.props.products} /> : 
                 <div className='notFound'><h5>Nenhum produto cadastrado!</h5></div>}

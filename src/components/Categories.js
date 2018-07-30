@@ -28,14 +28,14 @@ const Category = ({category}) => {
 class Categories extends Component {
 
     render(){
-        const { data, getProducts, getProduct, product } = this.props
+        const { data, getProducts, getProduct, products, product } = this.props
         return (
             <div className='content'>
                 <Route path='/' exact render={ props => 
                     <CategoriesList {...props} categories={data} /> } />
 
                 <Route path='/categorias/:catId' render={ props =>
-                    <Products {...props} products={this.props.products} getProducts={getProducts} /> } />
+                    <Products {...props} products={products} getProducts={getProducts} /> } />
 
                 <Route path='/produtos/:prodId' render={ props => 
                     <Product {...props} product={product} getProduct={getProduct} /> } />

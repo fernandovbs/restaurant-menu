@@ -1,7 +1,33 @@
-.App {
-  text-align: center;
+html, body, #root{
+  display: block;
+  height: 100%;
+}
+#root {
+  background: url("images/background.png") repeat;
 }
 
+.loader{
+  position:absolute;
+  width:300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loader h2{
+  margin-top:10px;
+  font-weight: bold;
+  text-align: center;
+  color: #940114;
+}
+
+.loader img{
+  animation: blinker 3s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 .App-logo {
   width:100%;
 }

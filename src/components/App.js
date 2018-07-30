@@ -37,7 +37,7 @@ class App extends Component {
         this.setState({
             products: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
                 {
-                    if (produtos[produtoId].category == catId) produtosCategoria[produtoId] = produtos[produtoId]
+                    if (produtos[produtoId].category === Number(catId)) produtosCategoria[produtoId] = produtos[produtoId]
                     return produtosCategoria
                 }, 
             [])
@@ -52,7 +52,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className='container fixed-width'>
+        <div className='container fixed-width app'>
           <Header logo={logo} />
             <Categories data={this.state.categories} 
               getProducts={this.getProducts}
