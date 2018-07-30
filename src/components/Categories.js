@@ -2,17 +2,18 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import LoadReady from './LoadReady'
 import Products from './Products'
+import Product from './Product'
 
 const CategoriesList = ({categories}) => 
     <div className='row'>
         {Object.keys(categories).map(categoryId => 
-          <div className='col-6' key={categories[categoryId].id}>
+          <div className='col-md-6 col-sm-12' key={categories[categoryId].id}>
             <Category category={categories[categoryId]} />
           </div>  
         )}
     </div>
 
-const Category = ({match, category}) => {
+const Category = ({category}) => {
 
     return (<Link to={`categorias/${category.id}`}>
                 <div className='Category-item'>
@@ -27,11 +28,17 @@ const Category = ({match, category}) => {
 class Categories extends Component {
 
     render(){
-        const { data } = this.props
+        const { data, getProducts, getProduct, product } = this.props
         return (
             <div className='content'>
-                <Route path='/' exact render={ props => <CategoriesList {...props} categories={data} /> } />
-                <Route path='/categorias/:catId' component={Products} />
+                <Route path='/' exact render={ props => 
+                    <CategoriesList {...props} categories={data} /> } />
+
+                <Route path='/categorias/:catId' render={ props =>
+                    <Products {...props} products={this.props.products} getProducts={getProducts} /> } />
+
+                <Route path='/produtos/:prodId' render={ props => 
+                    <Product {...props} product={product} getProduct={getProduct} /> } />
             </div>)
     }
 }

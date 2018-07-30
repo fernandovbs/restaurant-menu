@@ -10,8 +10,14 @@ import Categories from './Categories'
 class App extends Component {
   constructor(props){
     super(props)
+    
+    this.getProducts = this.getProducts.bind(this)
+    this.getProduct = this.getProduct.bind(this)
+
     this.state = {
-      'categorias': {}
+      'categories': {}, 
+      'products': [],
+      'product': {}
     }
   }
 
@@ -19,9 +25,28 @@ class App extends Component {
     const rootRef = firebase.database().ref().child('categorias')
     rootRef.on('value', snap => {
       this.setState({
-        categorias: snap.val()
+        categories: snap.val()
       })
     })
+  }
+
+  getProducts(catId){
+    const rootRef = firebase.database().ref().child('produtos')
+    rootRef.on('value', snap => {
+        const produtos = snap.val()
+        this.setState({
+            products: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
+                {
+                    if (produtos[produtoId].category == catId) produtosCategoria[produtoId] = produtos[produtoId]
+                    return produtosCategoria
+                }, 
+            [])
+      })
+    })
+  }  
+
+  getProduct(prodKey){
+    this.setState({'product': this.state.products[prodKey]})
   }
 
   render() {
@@ -29,7 +54,11 @@ class App extends Component {
       <Router>
         <div className='container fixed-width'>
           <Header logo={logo} />
-            <Categories data={this.state.categorias}/>
+            <Categories data={this.state.categories} 
+              getProducts={this.getProducts}
+              getProduct={this.getProduct} 
+              products={this.state.products} 
+              product={this.state.product} />
         </div>
       </Router>
     )

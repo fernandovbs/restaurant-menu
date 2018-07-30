@@ -1,52 +1,39 @@
 import React, { Component } from 'react'
-import * as firebase from 'firebase'
+import { Link } from 'react-router-dom'
 
-const Product = ({product}) => {
-    return (<div className='Product-item col-md-4 col-sm-12'>        
-                <h4 className='text-center'>{product.title}</h4>
-                <div className='row'>
-                    <div className='col-md-8 col-sm-12'>
-                        <p className='ingredients'>{product.ingredients}</p>
-                    </div>
-                    <div className='col-md-4 col-sm-12'>
-                        {product.price && <p className="price">R$ {product.price}</p>}
+const Product = ({product, productKey}) => {
+    return (<div className='col-md-6 col-sm-12'>
+            <Link to={`/produtos/${productKey}`}>
+                <div className='Product-item '>        
+                    <h4 className='text-center'>{product.title}</h4>
+                    <div className='row'>
+                        <div className='col-md-8 col-sm-12'>
+                            <p className='ingredients'>{product.ingredients}</p>
+                        </div>
+                        <div className='col-md-4 col-sm-12'>
+                            {product.price && <p className="price">R$ {product.price}</p>}
+                        </div>
                     </div>
                 </div>
+            </Link>
         </div>)
 }
 
-const ProductsList = ({products}) => products.map( product => <Product product={product} key={product.id} /> )
+const ProductsList = ({products}) => Object.keys(products).map( productKey => 
+    <Product product={products[productKey]} productKey={productKey} key={products[productKey].id} /> 
+)
 
 class Products extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            'produtos': []
-        }
-    }
 
     componentDidMount() {
-        const {match} = this.props
-        const rootRef = firebase.database().ref().child('produtos')
-        rootRef.on('value', snap => {
-            const produtos = snap.val()
-            this.setState({
-                produtos: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
-                    {
-                        produtos[produtoId].category == match.params.catId && produtosCategoria.push(produtos[produtoId])
-                        return produtosCategoria
-                    }, 
-                [])
-          })
-          console.log(this.state.produtos)
-        })
-
-        //getProducts(match.params.catId)     
+        const {match, getProducts} = this.props
+        getProducts(match.params.catId)
     }
 
     render(){
         return (<div className='row'>
-                {this.state.produtos.length ? <ProductsList products={this.state.produtos} /> : <p>Nenhum produto cadastrado!</p>}
+                {Object.keys(this.props.products).length ? <ProductsList products={this.props.products} /> : 
+                <div className='notFound'><h5>Nenhum produto cadastrado!</h5></div>}
             </div>)
     }
 }
