@@ -9,13 +9,14 @@ import Categories from './Categories'
 
 class App extends Component {
   constructor(props){
-    super(props)
-    
+    super(props) 
+       
     this.getProducts = this.getProducts.bind(this)
     this.getProduct = this.getProduct.bind(this)
 
     this.state = {
-      'categories': {}, 
+      'categories': {},
+      'categorie': {},
       'products': [],
       'product': {}
     }
@@ -37,7 +38,8 @@ class App extends Component {
         this.setState({
             products: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
                 {
-                    if (produtos[produtoId].category === Number(catId)) produtosCategoria[produtoId] = produtos[produtoId]
+                  console.log(this.state.categories)
+                    if (produtos[produtoId].category === Number(this.state.categories[catId].id)) produtosCategoria[produtoId] = produtos[produtoId]
                     return produtosCategoria
                 }, 
             [])
