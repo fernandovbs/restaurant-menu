@@ -38,7 +38,6 @@ class App extends Component {
         this.setState({
             products: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
                 {
-                  console.log(this.state.categories)
                     if (produtos[produtoId].category === Number(this.state.categories[catId].id)) produtosCategoria[produtoId] = produtos[produtoId]
                     return produtosCategoria
                 }, 
