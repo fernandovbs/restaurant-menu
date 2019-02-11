@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import * as firebase from 'firebase'
-import config from './config-local'
+import { firebaseInit } from './firebase'
 
-firebase.initializeApp(config);
+firebaseInit()
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

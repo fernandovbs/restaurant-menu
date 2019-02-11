@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import withRoot from '../withRoot';
+import Paper from '@material-ui/core/Grid'
+
 import logo from './../images/logo.png';
-import './../App.css';
+//import './../App.css';
 import { BrowserRouter as Router } from "react-router-dom"
-import * as firebase from 'firebase'
+import { database } from './../firebase'
 
 import Header from './Header'
 import Categories from './Categories'
+
+
+const styles = theme => ({
+  root: {
+    textAlign: 'center',
+    },
+});
+
 
 class App extends Component {
   constructor(props){
@@ -23,7 +36,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    const rootRef = firebase.database().ref().child('categorias')
+    const rootRef = database().ref().child('categorias')
     rootRef.on('value', snap => {
       this.setState({
         categories: snap.val()
@@ -32,7 +45,7 @@ class App extends Component {
   }
 
   getProducts(catId){
-    const rootRef = firebase.database().ref().child('produtos')
+    const rootRef = database().ref().child('produtos')
     rootRef.on('value', snap => {
         const produtos = snap.val()
         this.setState({
@@ -51,19 +64,25 @@ class App extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Router>
-        <div className='container fixed-width app'>
+        <Paper  className={classes.root}>
           <Header logo={logo} />
-            <Categories data={this.state.categories} 
-              getProducts={this.getProducts}
-              getProduct={this.getProduct} 
-              products={this.state.products} 
-              product={this.state.product} />
-        </div>
-      </Router>
+          <Categories data={this.state.categories} 
+            getProducts={this.getProducts}
+            getProduct={this.getProduct} 
+            products={this.state.products} 
+            product={this.state.product} />
+        </Paper>  
+  </Router>
     )
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withRoot(withStyles(styles)(App));
