@@ -14,10 +14,23 @@ import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 
+const CustomTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+      fontSize: 14,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
 
 const styles = theme => ({
     grid: {
         paddingTop: theme.spacing.unit * 2,
+    },
+    table: {
+        marginTop: 10,
     },
     media: {
         height: 140,
@@ -27,7 +40,7 @@ const styles = theme => ({
     },
     divider: {
         margin: `${theme.spacing.unit * 2}px 0px`,
-    }
+    },
 })
 
 const ProductDetails = withStyles(styles)(({product, classes}) => 
@@ -70,19 +83,19 @@ const ProductVariations = withStyles(styles)(({variations, classes}) =>
         <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Tamanho</TableCell>
-            <TableCell>Preço</TableCell>
+            <CustomTableCell>Tamanho</CustomTableCell>
+            <CustomTableCell>Preço</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
             {variations.map((variation, key) => 
                 <TableRow key={key}>
-                    <TableCell component="th" scope="row">
+                    <CustomTableCell component="th" scope="row">
                         {variation.title}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
                     R${variation.price}
-                    </TableCell>
+                    </CustomTableCell>
                 </TableRow>
             )}
         </TableBody>

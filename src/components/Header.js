@@ -17,6 +17,7 @@ const styles = {
     menuButton: {
       marginLeft: -12,
       marginRight: 20,
+      fontSize: 18,
     },
   };
 
@@ -29,8 +30,8 @@ const Header = (props) => {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            Vianna
+          <Typography variant="h4" color="inherit" className={classes.grow}>
+            Vianna's Sandubaria
           </Typography>
         </Toolbar>
       </AppBar>        
