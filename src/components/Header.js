@@ -30,7 +30,7 @@ const Header = (props) => {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h4" color="inherit" className={classes.grow}>
+          <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>
         </Toolbar>

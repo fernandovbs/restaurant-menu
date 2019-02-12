@@ -21,21 +21,23 @@ class ProductComponent extends Component {
     constructor(props){
         super(props)
 
-        this.history = this.props.history
         this.handleRedirect = this.handleRedirect.bind(this)
+
+        this.history = this.props.history
+        this.link = `/produtos/${this.props.productKey}`
     }
 
-    handleRedirect({target}){
-        this.history.push(target.attributes.link.value)
+    handleRedirect(){
+        this.history.push(this.link)
     }
 
     render(){
-        const {product, productKey, classes} = this.props
+        const {product, classes} = this.props
 
         return (
             <Grid item xs={12} sm={6}>
                 <Card color="secondary" elevation={5} className={classes.card}>
-                    <CardActionArea link={`/produtos/${productKey}`} onClick={this.handleRedirect}>        
+                    <CardActionArea onClick={this.handleRedirect}>        
                         <CardContent> 
                             <Typography variant="h4">{product.title}</Typography>
                             <Grid container spacing={16} className={classes.grid}>

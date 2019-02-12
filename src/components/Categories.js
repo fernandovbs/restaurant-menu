@@ -54,11 +54,13 @@ class CategoryComponent extends Component {
         this.catId = this.props.catId
         this.classes = this.props.classes
         this.history = this.props.history
+        this.link = `/categorias/${this.catId}`
     }
 
     renderBaseCategory(){
-        return <Card color="secondary" elevation={5} className={this.classes.card}>
-            <CardActionArea onClick={this.handleRedirect} link={`/categorias/${this.catId}/sub`}>
+        this.link = `/categorias/${this.catId}/sub`
+        return <Card color="secondary" className={this.classes.card}>
+            <CardActionArea onClick={this.handleRedirect}>
                 <CardMedia
                 className={this.classes.media}
                 image={'/'+this.category.image}
@@ -72,8 +74,8 @@ class CategoryComponent extends Component {
     }
 
     renderChildCategory(){
-        return <Card color="secondary" elevation={5} className={this.classes.card}>
-            <CardActionArea onClick={this.handleRedirect} link={`/categorias/${this.catId}`}>
+        return <Card color="secondary" className={this.classes.card}>
+            <CardActionArea onClick={this.handleRedirect}>
                 <CardMedia
                 className={this.classes.media}
                 image={'/'+this.category.image}
@@ -87,8 +89,8 @@ class CategoryComponent extends Component {
 
     }    
 
-    handleRedirect({target}){
-        this.history.push(target.attributes.link.value)
+    handleRedirect(){
+        this.history.push(this.link)
     }
 
     render(){
