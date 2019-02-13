@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import BaseMenu from './Menu'
 
 const styles = {
     root: {
@@ -19,17 +18,19 @@ const styles = {
       marginRight: 20,
       fontSize: 18,
     },
+    appBar: {
+      top: 'auto',
+      bottom: 0,
+    }
   };
 
 const Header = (props) => {
     const { classes} = props;
     
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
+          <BaseMenu/>  
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>

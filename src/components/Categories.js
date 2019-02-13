@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
     grid: {
-        paddingTop: theme.spacing.unit * 2,
+        paddingTop: 2,
     },
     media: {
         height: 140,

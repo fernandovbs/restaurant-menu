@@ -16,6 +16,7 @@ import Categories from './Categories'
 const styles = theme => ({
   root: {
     textAlign: 'center',
+    paddingBottom: 50,
     },
 });
 
