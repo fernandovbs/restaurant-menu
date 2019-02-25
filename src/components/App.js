@@ -7,10 +7,12 @@ import Paper from '@material-ui/core/Grid'
 import logo from './../images/logo.png';
 //import './../App.css';
 import { BrowserRouter as Router } from "react-router-dom"
-import { database } from './../firebase'
+//import { database } from './../firebase'
 
 import Header from './Header'
 import Categories from './Categories'
+
+import Prismic from 'prismic-javascript'
 
 
 const styles = theme => ({
@@ -27,15 +29,44 @@ class App extends Component {
        
     this.getProducts = this.getProducts.bind(this)
     this.getProduct = this.getProduct.bind(this)
-
+    
+    this.apiEndpoint = 'https://vianna-sandubaria.prismic.io/api/v2';
+    
     this.state = {
       'categories': {},
       'categorie': {},
       'products': [],
-      'product': {}
+      'product': {},
     }
   }
+/*
+  linkResolver(doc) {
+    if (doc.type === 'categorias') {
+      return '/categorias/' + doc.uid;
+    } else if (doc.type === 'produtos') {
+      return '/produtos/' + doc.uid
+    }
 
+    return '/'
+  }
+*/
+	
+  componentWillMount() {
+	    
+    Prismic.api(this.apiEndpoint).then(api => {
+    
+      api.query(Prismic.Predicates.at('document.type', 'categorias')).then(response => {
+    
+        if (response) {
+          this.setState({ categories: response.results });
+    
+        }
+    
+      });
+    
+    });
+  }  
+/*
   componentDidMount(){
     const rootRef = database().ref().child('categorias')
     rootRef.on('value', snap => {
@@ -44,24 +75,23 @@ class App extends Component {
       })
     })
   }
-
+*/
   getProducts(catId){
-    const rootRef = database().ref().child('produtos')
-    rootRef.on('value', snap => {
-        const produtos = snap.val()
-        this.setState({
-            products: Object.keys(produtos).reduce((produtosCategoria, produtoId) => 
-                {
-                    if (produtos[produtoId].category === Number(this.state.categories[catId].id)) produtosCategoria[produtoId] = produtos[produtoId]
-                    return produtosCategoria
-                }, 
-            [])
+    Prismic.api(this.apiEndpoint).then(api => {    
+      api.query(Prismic.Predicates.at('document.type', 'produtos')).then(response => {
+      
+        response && this.setState({
+          products: response.results.filter( produto => produto.data.categoria.uid === catId )
+        })
+      
       })
-    })
-  }  
+    })   
+  }
 
   getProduct(prodKey){
-    this.setState({'product': this.state.products[prodKey]})
+      this.setState({
+        'product': this.state.products.filter( produto => produto.uid === prodKey )[0]
+    })
   }
 
   render() {
@@ -70,7 +100,7 @@ class App extends Component {
     return (
       <Router>
         <Paper  className={classes.root}>
-          <Header logo={logo} />
+          <Header logo={logo} categories={this.state.categories} />
           <Categories data={this.state.categories} 
             getProducts={this.getProducts}
             getProduct={this.getProduct} 

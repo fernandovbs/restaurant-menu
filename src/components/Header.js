@@ -19,18 +19,17 @@ const styles = {
       fontSize: 18,
     },
     appBar: {
-      top: 'auto',
-      bottom: 0,
+      marginBottom: 10,
     }
   };
 
 const Header = (props) => {
-    const { classes} = props;
-    
+    const { classes, categories } = props;
+
     return (
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <BaseMenu/>  
+          <BaseMenu categories={categories} />  
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>

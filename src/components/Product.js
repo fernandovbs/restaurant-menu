@@ -13,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
+import { RichText } from 'prismic-reactjs'
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -46,27 +47,30 @@ const styles = theme => ({
 const ProductDetails = withStyles(styles)(({product, classes}) => 
     <Card color="secondary" elevation={5} className={classes.card}>
         <CardContent> 
-            <Typography variant="h4" className='productTitle'>{product.title}</Typography>
-            <Typography variant="subtitle1" className='product-description'>{product && product.description}</Typography>        
+            <Typography variant="h4" className='productTitle'>{RichText.asText(product.data.titulo)}</Typography>
+            <Typography variant="subtitle1" className='product-description'>{product && RichText.asText(product.data.descricao)}</Typography>        
 
             <Divider variant="middle" className={classes.divider}/>
 
-            {product.ingredients && 
-                <ProductIngredients ingredients={product.ingredients.split(',')}/>}
+            {product.data.ingredientes && 
+                <ProductIngredients ingredientes={product.data.ingredientes}/>}
 
             <Divider variant="middle" className={classes.divider}/>    
 
-            {product.variations && <ProductVariations variations={product.variations} />}
+            {(product.data.variacoes.length === 1 && 
+                <Typography variant="h6" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>) ||
+            <ProductVariations variations={product.data.variacoes} />}
+        
         </CardContent>
     </Card>)
 
-const ProductIngredients = withStyles(styles)(({ingredients, classes}) => 
+const ProductIngredients = withStyles(styles)(({ingredientes, classes}) => 
 <Fragment> 
     <Typography variant="h5">Ingredientes</Typography>
-    {ingredients.map((ingredient, key) => 
+    {ingredientes.map((ingrediente, key) => 
         <Chip key={key}
             avatar={<Avatar>VS</Avatar>}
-            label={ingredient}
+            label={ingrediente.ingrediente}
             clickable
             className={classes.chip}
             color="primary"
@@ -91,10 +95,10 @@ const ProductVariations = withStyles(styles)(({variations, classes}) =>
             {variations.map((variation, key) => 
                 <TableRow key={key}>
                     <CustomTableCell component="th" scope="row">
-                        {variation.title}
+                        {RichText.asText(variation.variacao)}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
-                    R${variation.price}
+                    R${variation.preco}
                     </CustomTableCell>
                 </TableRow>
             )}
@@ -113,12 +117,11 @@ class Product extends Component{
 
     render(){
         const {product} = this.props
-
-        return (
+        console.log(product)
+        return ('uid' in product) &&
             <Grid item xs={12}>
-                {product && <ProductDetails product={product} />} 
+                {<ProductDetails product={product} />} 
             </Grid>
-        )
     }
 }
 

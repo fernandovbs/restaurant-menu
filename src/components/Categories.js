@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles';
+import { RichText } from 'prismic-reactjs'
 
 const styles = theme => ({
     grid: {
@@ -22,22 +23,24 @@ const styles = theme => ({
 
 const CategoriesList = ({categories, history}) => 
     <Fragment>
-        {Object.keys(categories).map(categoryId => 
-            categories[categoryId].father === 0 &&
-            <Grid item xs={12} sm={6} key={categories[categoryId].id}>
-                <Category category={categories[categoryId]} catId={categoryId} history={history}/>
+        {categories.map(category => 
+            !('uid' in category.data.pai) &&
+            <Grid item xs={12} sm={6} key={category.uid}>
+                <Category category={category.data} catId={category.uid} history={history}/>
             </Grid>  
         )}
     </Fragment>
 
 const ChildCategories = ({categories, match}) => {
-    const childCategories = categories[match.params.catId].child
+    const childCategories = categories.filter(category => 
+            ('uid' in category.data.pai && category.data.pai.uid === match.params.catId)
+        )
 
     return (
         <Fragment>
-            {Object.keys(childCategories).map(categoryId =>
-            <Grid item xs={12} sm={6}  key={childCategories[categoryId].id}>
-                <Category category={childCategories[categoryId]}  catId={categoryId}/>
+            {childCategories.map(category =>
+            <Grid item xs={12} sm={6}  key={category.uid}>
+                <Category category={category.data}  catId={category.uid}/>
             </Grid>  
             )}
         </Fragment> )
@@ -63,11 +66,11 @@ class CategoryComponent extends Component {
             <CardActionArea onClick={this.handleRedirect}>
                 <CardMedia
                 className={this.classes.media}
-                image={'/'+this.category.image}
-                title={this.category.title}
+                image={this.category.imagem.url}
+                title={RichText.asText(this.category.titulo)}
                 />            
                 <CardContent>   
-                    <Typography variant="h4">{this.category.title}</Typography>
+                    <Typography variant="h4">{RichText.asText(this.category.titulo)}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -78,11 +81,11 @@ class CategoryComponent extends Component {
             <CardActionArea onClick={this.handleRedirect}>
                 <CardMedia
                 className={this.classes.media}
-                image={'/'+this.category.image}
-                title={this.category.title}
+                image={this.category.imagem.url}
+                title={RichText.asText(this.category.titulo)}
                 />                
                 <CardContent>
-                    <Typography variant="h4">{this.category.title}</Typography>
+                    <Typography variant="h4">{RichText.asText(this.category.titulo)}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -94,7 +97,7 @@ class CategoryComponent extends Component {
     }
 
     render(){
-        return (this.category.child !== undefined && this.renderBaseCategory()) ||            
+        return (this.category.sub_categorias === 'Sim' && this.renderBaseCategory()) ||            
         this.renderChildCategory()
     }
 

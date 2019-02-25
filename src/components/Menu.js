@@ -4,6 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu';
+import { RichText } from 'prismic-reactjs'
+import { withRouter } from 'react-router-dom'
 
 const styles = {
     menuButton: {
@@ -15,22 +17,30 @@ const styles = {
 
 
 class BaseMenu extends React.Component {
-  state = {
-    anchorEl: null,
-  };
+  constructor(props){
+    super(props)
+    this.history = this.props.history
+    this.handleClose = this.handleClose.bind(this)
+
+    this.state = {
+      anchorEl: null,
+    }
+  }
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  handleClose ({target}) {
     this.setState({ anchorEl: null });
+    this.history.push(target.attributes.link)
   };
 
   render() {
     const { anchorEl } = this.state
-    const { classes } = this.props
-    return (
+    const { classes, categories } = this.props
+
+    return  ( categories.length > 0  && 
       <div>
         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" 
         aria-owns={anchorEl ? 'simple-menu' : undefined} aria-haspopup="true" onClick={this.handleClick}>
@@ -42,13 +52,18 @@ class BaseMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+          {
+            categories.map( category => {
+              if (!('uid' in category.data.pai)) {
+                const link = category.data.sub_categorias === 'Sim' ? `/categorias/${category.uid}/sub` :  `/categorias/${category.uid}`
+                return <MenuItem onClick={this.handleClose} link={link} key={category.uid}>{RichText.asText(category.data.titulo)}</MenuItem>
+              }
+              return ''
+             })          
+          }
         </Menu>
-      </div>
-    );
+      </div> )
   }
 }
 
-export default withStyles(styles)(BaseMenu);
+export default withRouter(withStyles(styles)(BaseMenu));
