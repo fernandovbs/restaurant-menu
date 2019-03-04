@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu';
 import { RichText } from 'prismic-reactjs'
+import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 const styles = {
@@ -31,14 +32,13 @@ class BaseMenu extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose ({target}) {
+  handleClose () {
     this.setState({ anchorEl: null });
-    this.history.push(target.attributes.link)
   };
 
   render() {
     const { anchorEl } = this.state
-    const { classes, categories } = this.props
+    const { classes, categories, location } = this.props
 
     return  ( categories.length > 0  && 
       <div>
@@ -55,9 +55,17 @@ class BaseMenu extends React.Component {
           {
             categories.map( category => {
               if (!('uid' in category.data.pai)) {
+
                 const link = category.data.sub_categorias === 'Sim' ? `/categorias/${category.uid}/sub` :  `/categorias/${category.uid}`
-                return <MenuItem onClick={this.handleClose} link={link} key={category.uid}>{RichText.asText(category.data.titulo)}</MenuItem>
+
+                return <MenuItem onClick={this.handleClose} key={category.uid}
+                  selected={location.pathname && location.pathname === link}>
+                  <NavLink to={link} style={{ textDecoration: 'none', color: 'unset' }}>
+                    {RichText.asText(category.data.titulo)}
+                  </NavLink>
+                </MenuItem>
               }
+
               return ''
              })          
           }
@@ -66,4 +74,4 @@ class BaseMenu extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(BaseMenu));
+export default withRouter(withStyles(styles)(BaseMenu))

@@ -47,7 +47,7 @@ const styles = theme => ({
 const ProductDetails = withStyles(styles)(({product, classes}) => 
     <Card color="secondary" elevation={5} className={classes.card}>
         <CardContent> 
-            <Typography variant="h4" className='productTitle'>{RichText.asText(product.data.titulo)}</Typography>
+            <Typography variant="h5" className='productTitle'>{RichText.asText(product.data.titulo)}</Typography>
             <Typography variant="subtitle1" className='product-description'>{product && RichText.asText(product.data.descricao)}</Typography>        
 
             <Divider variant="middle" className={classes.divider}/>
@@ -58,7 +58,7 @@ const ProductDetails = withStyles(styles)(({product, classes}) =>
             <Divider variant="middle" className={classes.divider}/>    
 
             {(product.data.variacoes.length === 1 && 
-                <Typography variant="h6" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>) ||
+                <Typography variant="h5" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>) ||
             <ProductVariations variations={product.data.variacoes} />}
         
         </CardContent>
@@ -66,7 +66,7 @@ const ProductDetails = withStyles(styles)(({product, classes}) =>
 
 const ProductIngredients = withStyles(styles)(({ingredientes, classes}) => 
 <Fragment> 
-    <Typography variant="h5">Ingredientes</Typography>
+    <Typography variant="h6">Ingredientes</Typography>
     {ingredientes.map((ingrediente, key) => 
         <Chip key={key}
             avatar={<Avatar>VS</Avatar>}
@@ -83,7 +83,7 @@ const ProductIngredients = withStyles(styles)(({ingredientes, classes}) =>
 
 const ProductVariations = withStyles(styles)(({variations, classes}) => 
     <Fragment> 
-        <Typography variant="h5">Opções</Typography>
+        <Typography variant="h6">Opções</Typography>
         <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -117,7 +117,7 @@ class Product extends Component{
 
     render(){
         const {product} = this.props
-        console.log(product)
+
         return ('uid' in product) &&
             <Grid item xs={12}>
                 {<ProductDetails product={product} />} 

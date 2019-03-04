@@ -4,12 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import Paper from '@material-ui/core/Grid'
 
-import logo from './../images/logo.png';
 //import './../App.css';
 import { BrowserRouter as Router } from "react-router-dom"
 //import { database } from './../firebase'
 
-import Header from './Header'
 import Categories from './Categories'
 
 import Prismic from 'prismic-javascript'
@@ -51,7 +49,7 @@ class App extends Component {
   }
 */
 	
-  componentWillMount() {
+  componentDidMount() {
 	    
     Prismic.api(this.apiEndpoint).then(api => {
     
@@ -100,7 +98,6 @@ class App extends Component {
     return (
       <Router>
         <Paper  className={classes.root}>
-          <Header logo={logo} categories={this.state.categories} />
           <Categories data={this.state.categories} 
             getProducts={this.getProducts}
             getProduct={this.getProduct} 

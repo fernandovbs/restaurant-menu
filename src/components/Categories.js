@@ -11,6 +11,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles';
 import { RichText } from 'prismic-reactjs'
+import logo from './../images/logo.png';
+import Header from './Header'
+
 
 const styles = theme => ({
     grid: {
@@ -21,17 +24,17 @@ const styles = theme => ({
     },
 })
 
-const CategoriesList = ({categories, history}) => 
+const CategoriesList = ({categories, history, location}) => 
     <Fragment>
         {categories.map(category => 
             !('uid' in category.data.pai) &&
             <Grid item xs={12} sm={6} key={category.uid}>
-                <Category category={category.data} catId={category.uid} history={history}/>
+                <Category category={category.data} catId={category.uid} history={history} location={location}/>
             </Grid>  
         )}
     </Fragment>
 
-const ChildCategories = ({categories, match}) => {
+const ChildCategories = ({categories, match, location}) => {
     const childCategories = categories.filter(category => 
             ('uid' in category.data.pai && category.data.pai.uid === match.params.catId)
         )
@@ -40,7 +43,7 @@ const ChildCategories = ({categories, match}) => {
         <Fragment>
             {childCategories.map(category =>
             <Grid item xs={12} sm={6}  key={category.uid}>
-                <Category category={category.data}  catId={category.uid}/>
+                <Category category={category.data}  catId={category.uid} location={location}/>
             </Grid>  
             )}
         </Fragment> )
@@ -70,7 +73,7 @@ class CategoryComponent extends Component {
                 title={RichText.asText(this.category.titulo)}
                 />            
                 <CardContent>   
-                    <Typography variant="h4">{RichText.asText(this.category.titulo)}</Typography>
+                    <Typography variant="h5">{RichText.asText(this.category.titulo)}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -85,7 +88,7 @@ class CategoryComponent extends Component {
                 title={RichText.asText(this.category.titulo)}
                 />                
                 <CardContent>
-                    <Typography variant="h4">{RichText.asText(this.category.titulo)}</Typography>
+                    <Typography variant="h5">{RichText.asText(this.category.titulo)}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -113,24 +116,28 @@ class Categories extends Component {
                 getProduct, 
                 products, 
                 product,
-                classes } = this.props
+                classes,
+                location } = this.props
 
         return (
-            <Grid container spacing={16} className={classes.grid}>
-                <Route path='/' exact render={ props => 
-                    <CategoriesList {...props} categories={data} /> } />
+            <Fragment>
+                <Header logo={logo} categories={data} products={products} location={location}/>
+                <Grid container spacing={16} className={classes.grid}>
+                    <Route path='/' exact render={ props => 
+                        <CategoriesList {...props} categories={data} location={location} /> } />
 
-                <Route path='/categorias/:catId' exact render={ props =>
-                    <Products {...props} products={products} getProducts={getProducts} />
-                } />
+                    <Route path='/categorias/:catId' exact render={ props =>
+                        <Products {...props} products={products} getProducts={getProducts }  location={location} />
+                    } />
 
-                <Route path='/categorias/:catId/sub' render={ props =>
-                    <ChildCategories {...props} categories={data} />
-                } />                
+                    <Route path='/categorias/:catId/sub' render={ props =>
+                        <ChildCategories {...props} categories={data}  location={location} />
+                    } />                
 
-                <Route path='/produtos/:prodId' render={ props => 
-                    <Product {...props} product={product} getProduct={getProduct} /> } />
-            </Grid> )
+                    <Route path='/produtos/:prodId' render={ props => 
+                        <Product {...props} product={product} getProduct={getProduct}  location={location} /> } />
+                </Grid>
+            </Fragment> )
     }
 }
 

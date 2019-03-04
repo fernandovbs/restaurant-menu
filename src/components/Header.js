@@ -24,12 +24,11 @@ const styles = {
   };
 
 const Header = (props) => {
-    const { classes, categories } = props;
-
+    const { classes, categories, location } = props;
     return (
         <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <BaseMenu categories={categories} />  
+          <BaseMenu categories={categories} location={location} />  
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>

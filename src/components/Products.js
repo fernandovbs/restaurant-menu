@@ -41,7 +41,7 @@ class ProductComponent extends Component {
                 <Card color="secondary" elevation={5} className={classes.card}>
                     <CardActionArea onClick={this.handleRedirect}>        
                         <CardContent> 
-                            <Typography variant="h4">{RichText.asText(product.data.titulo)}</Typography>
+                            <Typography variant="h5">{RichText.asText(product.data.titulo)}</Typography>
                             <Grid container spacing={16} className={classes.grid}>
                                 <Grid item xs={12} sm={8}>
                                     <Typography variant="subtitle1" className='ingredients'>{
@@ -52,7 +52,7 @@ class ProductComponent extends Component {
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     {product.data.variacoes.length === 1 && 
-                                    <Typography variant="h6" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>}
+                                    <Typography variant="h5" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>}
                                 </Grid>
                             </Grid>
                         </CardContent>
@@ -72,13 +72,11 @@ const ProductsList = ({products}) => products.map( product =>
 
 class Products extends Component {
 
-    componentDidMount() {
-        const {match, getProducts} = this.props
-        getProducts(match.params.catId)
-    }
-
     render(){
         const classes = this.props.classes
+        const {match, getProducts} = this.props
+        getProducts(match.params.catId)
+
         return (<Fragment>
                 {this.props.products.length ? <ProductsList products={this.props.products} /> : 
                 <Grid item xs={12}>
@@ -92,4 +90,4 @@ class Products extends Component {
     }
 }
 
-export default withStyles(styles)(Products)
+export default withRouter(withStyles(styles)(Products))
