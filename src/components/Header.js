@@ -4,7 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import BaseMenu from './Menu'
+import { NavLink } from 'react-router-dom'
 
 const styles = {
     root: {
@@ -23,6 +25,15 @@ const styles = {
     }
   };
 
+
+function HomeIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+}
+
 const Header = (props) => {
     const { classes, categories, location } = props;
     return (
@@ -32,6 +43,9 @@ const Header = (props) => {
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>
+          <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+          <HomeIcon className={classes.icon} />
+          </NavLink>
         </Toolbar>
       </AppBar>        
     )

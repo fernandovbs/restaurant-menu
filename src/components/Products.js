@@ -7,7 +7,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles';
 import { RichText } from 'prismic-reactjs'
-
+import { ProductVariations } from './Product'
 
 const styles = theme => ({
     grid: {
@@ -43,16 +43,13 @@ class ProductComponent extends Component {
                         <CardContent> 
                             <Typography variant="h5">{RichText.asText(product.data.titulo)}</Typography>
                             <Grid container spacing={16} className={classes.grid}>
-                                <Grid item xs={12} sm={8}>
+                                <Grid item xs={12} sm={12}>
                                     <Typography variant="subtitle1" className='ingredients'>{
                                         product.data.ingredientes.map(
                                             ingrediente => ingrediente.ingrediente
                                         ).join(', ')
                                     }</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={4}>
-                                    {product.data.variacoes.length === 1 && 
-                                    <Typography variant="h5" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>}
+                                    <ProductVariations variations={product.data.variacoes} />
                                 </Grid>
                             </Grid>
                         </CardContent>

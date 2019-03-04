@@ -17,12 +17,12 @@ import { RichText } from 'prismic-reactjs'
 
 const CustomTableCell = withStyles(theme => ({
     head: {
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: theme.palette.secondary.light,
       color: theme.palette.common.white,
-      fontSize: 14,
+      fontSize: 16,
     },
     body: {
-      fontSize: 14,
+      fontSize: 16,
     },
   }))(TableCell);
 
@@ -42,6 +42,7 @@ const styles = theme => ({
     divider: {
         margin: `${theme.spacing.unit * 2}px 0px`,
     },
+
 })
 
 const ProductDetails = withStyles(styles)(({product, classes}) => 
@@ -81,9 +82,10 @@ const ProductIngredients = withStyles(styles)(({ingredientes, classes}) =>
 </Fragment>)
 
 
-const ProductVariations = withStyles(styles)(({variations, classes}) => 
+export const ProductVariations = withStyles(styles)(({variations, classes}) => 
+    (variations.length === 1 && 
+    <Typography variant="h5" color="green" className="price">R$ {variations[0].preco}</Typography>) ||
     <Fragment> 
-        <Typography variant="h6">Opções</Typography>
         <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -98,7 +100,7 @@ const ProductVariations = withStyles(styles)(({variations, classes}) =>
                         {RichText.asText(variation.variacao)}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
-                    R${variation.preco}
+                    <Typography variant="h5" style={{color:"#1b5e20"}} >R${variation.preco}</Typography>
                     </CustomTableCell>
                 </TableRow>
             )}
@@ -107,7 +109,7 @@ const ProductVariations = withStyles(styles)(({variations, classes}) =>
         <ul>
         </ul>
     </Fragment>)
-
+    
 class Product extends Component{
 
     componentDidMount(){
