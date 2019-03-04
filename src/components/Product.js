@@ -17,12 +17,13 @@ import { RichText } from 'prismic-reactjs'
 
 const CustomTableCell = withStyles(theme => ({
     head: {
-      backgroundColor: theme.palette.secondary.light,
-      color: theme.palette.common.white,
+      color: theme.palette.common.black,
+      borderBottom: `1px solid ${theme.palette.primary.light}`,
       fontSize: 16,
     },
     body: {
       fontSize: 16,
+      borderBottom: `1px solid ${theme.palette.primary.light}`,
     },
   }))(TableCell);
 
@@ -53,14 +54,10 @@ const ProductDetails = withStyles(styles)(({product, classes}) =>
 
             <Divider variant="middle" className={classes.divider}/>
 
-            {product.data.ingredientes && 
+            {product.data.ingredientes.length > 1 && 
                 <ProductIngredients ingredientes={product.data.ingredientes}/>}
 
-            <Divider variant="middle" className={classes.divider}/>    
-
-            {(product.data.variacoes.length === 1 && 
-                <Typography variant="h5" color="primary" className="price">R$ {product.data.variacoes[0].preco}</Typography>) ||
-            <ProductVariations variations={product.data.variacoes} />}
+            <ProductVariations variations={product.data.variacoes} />
         
         </CardContent>
     </Card>)
@@ -79,12 +76,14 @@ const ProductIngredients = withStyles(styles)(({ingredientes, classes}) =>
             deleteIcon={<DoneIcon />}
         />
     )}
+
+    <Divider variant="middle" className={classes.divider}/>    
 </Fragment>)
 
 
 export const ProductVariations = withStyles(styles)(({variations, classes}) => 
     (variations.length === 1 && 
-    <Typography variant="h5" color="green" className="price">R$ {variations[0].preco}</Typography>) ||
+    <Typography variant="h5" style={{color:"#4CAF50"}} className="price">R$ {variations[0].preco}</Typography>) ||
     <Fragment> 
         <Table className={classes.table}>
         <TableHead>
@@ -100,7 +99,7 @@ export const ProductVariations = withStyles(styles)(({variations, classes}) =>
                         {RichText.asText(variation.variacao)}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
-                    <Typography variant="h5" style={{color:"#1b5e20"}} >R${variation.preco}</Typography>
+                    <Typography variant="h5" style={{color:"#4CAF50"}} >R${variation.preco}</Typography>
                     </CustomTableCell>
                 </TableRow>
             )}

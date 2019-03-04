@@ -43,9 +43,11 @@ const Header = (props) => {
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>
-          <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }}>
-          <HomeIcon className={classes.icon} />
-          </NavLink>
+          <div>
+            <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+              <HomeIcon className={classes.icon} />
+            </NavLink>
+          </div>
         </Toolbar>
       </AppBar>        
     )
