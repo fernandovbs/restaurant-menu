@@ -24,8 +24,9 @@ const styles = theme => ({
     },
 })
 
-const CategoriesList = ({categories, history, location}) => 
-    <Fragment>
+const CategoriesList = ({categories, clearProducts, products, history, location}) => {
+    products.length > 0 && clearProducts()
+    return <Fragment>
         {categories.map(category => 
             !('uid' in category.data.pai) &&
             <Grid item xs={12} sm={6} key={category.uid}>
@@ -33,8 +34,9 @@ const CategoriesList = ({categories, history, location}) =>
             </Grid>  
         )}
     </Fragment>
-
-const ChildCategories = ({categories, match, location}) => {
+}
+const ChildCategories = ({categories, clearProducts, products, match, location}) => {
+    products.length > 0 && clearProducts()
     const childCategories = categories.filter(category => 
             ('uid' in category.data.pai && category.data.pai.uid === match.params.catId)
         )
@@ -113,6 +115,8 @@ class Categories extends Component {
     render(){
         const { data, 
                 getProducts,
+                clearProducts,
+                clearProduct,
                 getProduct, 
                 products, 
                 product,
@@ -124,18 +128,18 @@ class Categories extends Component {
                 <Header logo={logo} categories={data} products={products} location={location}/>
                 <Grid container spacing={16} className={classes.grid}>
                     <Route path='/' exact render={ props => 
-                        <CategoriesList {...props} categories={data} location={location} /> } />
+                        <CategoriesList {...props} clearProducts={clearProducts} products={products} categories={data} location={location} /> } />
 
                     <Route path='/categorias/:catId' exact render={ props =>
-                        <Products {...props} products={products} getProducts={getProducts }  location={location} />
+                        <Products {...props} products={products} getProducts={getProducts } clearProducts={clearProducts} />
                     } />
 
                     <Route path='/categorias/:catId/sub' render={ props =>
-                        <ChildCategories {...props} categories={data}  location={location} />
+                        <ChildCategories {...props} categories={data} clearProducts={clearProducts} products={products}  location={location} />
                     } />                
 
                     <Route path='/produtos/:prodId' render={ props => 
-                        <Product {...props} product={product} getProduct={getProduct}  location={location} /> } />
+                        <Product {...props} product={product} getProduct={getProduct}  clearProduct={clearProduct} location={location} /> } />
                 </Grid>
             </Fragment> )
     }

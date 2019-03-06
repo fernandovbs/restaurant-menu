@@ -68,22 +68,50 @@ const ProductsList = ({products}) => products.map( product =>
 )
 
 class Products extends Component {
+    constructor(props){
+        super(props)
+        this.state = {location: this.props.location.pathname}
+    }
+
+    componentDidMount(){
+        const {match, getProducts} = this.props
+        getProducts(match.params.catId)
+    }
+    
+    componentDidUpdate(){
+        if (this.state.location !== this.props.location.pathname) {
+            const {match, getProducts} = this.props
+            this.setState({location: this.props.location.pathname})
+            getProducts(match.params.catId)            
+        }
+    }
 
     render(){
         const classes = this.props.classes
-        const {match, getProducts} = this.props
-        getProducts(match.params.catId)
 
-        return (<Fragment>
-                {this.props.products.length ? <ProductsList products={this.props.products} /> : 
-                <Grid item xs={12}>
+        if (this.props.products.length) {
+            if (this.props.products[0].id !== 'none') {
+                return (<Fragment>
+                    <ProductsList products={this.props.products} />
+                </Fragment>)    
+            } else {
+                return <Grid item xs={12}>
                     <Card color="secondary" elevation={5} className={classes.card}>
-                        <CardContent>
-                            <Typography variant="h5">Nenhum produto cadastrado!</Typography>
+                     <CardContent>
+                            <Typography variant="h5">Nenhum produto disponível nesta categoria</Typography>
                         </CardContent>
                     </Card>        
-                </Grid>}
-            </Fragment>)
+                </Grid>
+            }
+        } else {
+            return <Grid item xs={12}>
+                <Card color="secondary" elevation={5} className={classes.card}>
+                    <CardContent>
+                        <Typography variant="h5">Carregando...</Typography>
+                    </CardContent>
+                </Card>        
+            </Grid>
+        }
     }
 }
 

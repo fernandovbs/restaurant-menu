@@ -45,7 +45,7 @@ const Header = (props) => {
           </div>
         )}
         <Typography variant="h5" color="inherit" className={classes.grow}>
-            Vianna's Sandubaria
+            Vianna's
           </Typography>
           <BaseMenu categories={categories} location={location} />  
         </Toolbar>

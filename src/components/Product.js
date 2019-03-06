@@ -115,6 +115,10 @@ class Product extends Component{
         const {match} = this.props
         this.props.getProduct(match.params.prodId)
     }
+    
+    componentWillUnmount(){
+        this.props.clearProduct()
+    }
 
     render(){
         const {product} = this.props

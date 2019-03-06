@@ -26,6 +26,8 @@ class App extends Component {
     super(props) 
        
     this.getProducts = this.getProducts.bind(this)
+    this.clearProducts = this.clearProducts.bind(this)    
+    this.clearProduct = this.clearProduct.bind(this)        
     this.getProduct = this.getProduct.bind(this)
     
     this.apiEndpoint = 'https://vianna-sandubaria.prismic.io/api/v2';
@@ -74,24 +76,51 @@ class App extends Component {
     })
   }
 */
+  clearProducts(){
+    this.setState({
+          products: [],
+        })   
+  }
+
+  clearProduct(){
+    this.setState({
+          product: {},
+        })
+  }
+
   getProducts(catId){
     Prismic.api(this.apiEndpoint).then(api => {    
       api.query(Prismic.Predicates.at('document.type', 'produtos')).then(response => {
       
-        response && this.setState({
-          products: response.results.filter( produto => produto.data.categoria.uid === catId )
-        })
-      
+        if (response) {
+           let products = response.results.filter( produto => produto.data.categoria.uid === catId )
+
+           if (products.length === 0) {
+            this.setState({
+              products: [{id: 'none'}]
+            })            
+          } else {
+            this.setState({
+              products: products
+            })
+          }
+        }
       })
     })   
   }
 
   getProduct(prodKey){
-      this.setState({
-        'product': this.state.products.filter( produto => produto.uid === prodKey )[0]
+    Prismic.api(this.apiEndpoint).then(api => {    
+      api.getByUID('produtos', prodKey).then(response => {      
+        if (response) {
+          this.setState({
+            'product': response
+          })        
+        }    
+      })
     })
   }
-
+  
   render() {
     const { classes } = this.props;
 
@@ -100,6 +129,8 @@ class App extends Component {
         <Paper  className={classes.root}>
           <Categories data={this.state.categories} 
             getProducts={this.getProducts}
+            clearProducts={this.clearProducts}
+            clearProduct={this.clearProduct}
             getProduct={this.getProduct} 
             products={this.state.products} 
             product={this.state.product} />
