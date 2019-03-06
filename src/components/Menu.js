@@ -10,8 +10,8 @@ import { withRouter } from 'react-router-dom'
 
 const styles = {
     menuButton: {
-      marginLeft: -12,
-      marginRight: 20,
+      marginRight: -12,
+      marginLeft: 20,
       fontSize: 18,
     },
   };

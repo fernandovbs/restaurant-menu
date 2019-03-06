@@ -4,9 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import BaseMenu from './Menu'
-import { NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = {
     root: {
@@ -22,32 +23,31 @@ const styles = {
     },
     appBar: {
       marginBottom: 10,
-    }
+    },
+    arrowButton: {
+      marginLeft: -12,
+      marginRight: 20,
+      fontSize: 18,      
+    },
   };
 
 
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
-
 const Header = (props) => {
-    const { classes, categories, location } = props;
+    const { classes, categories, location, history } = props;
     return (
         <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <BaseMenu categories={categories} location={location} />  
-          <Typography variant="h5" color="inherit" className={classes.grow}>
+        {(location.pathname && location.pathname !== '/') && (<div>
+            <IconButton color="inherit" aria-label="Voltar"  className={classes.arrowButton} 
+            aria-haspopup="false" onClick={() => {history.goBack()}}>
+              <ArrowBackIos />
+            </IconButton>
+          </div>
+        )}
+        <Typography variant="h5" color="inherit" className={classes.grow}>
             Vianna's Sandubaria
           </Typography>
-          <div>
-            <NavLink to="/" style={{ textDecoration: 'none', color: 'unset' }}>
-              <HomeIcon className={classes.icon} />
-            </NavLink>
-          </div>
+          <BaseMenu categories={categories} location={location} />  
         </Toolbar>
       </AppBar>        
     )
@@ -57,4 +57,4 @@ Header.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Header)
+export default withRouter(withStyles(styles)(Header))
