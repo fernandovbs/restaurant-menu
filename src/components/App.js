@@ -55,7 +55,7 @@ class App extends Component {
 	    
     Prismic.api(this.apiEndpoint).then(api => {
     
-      api.query(Prismic.Predicates.at('document.type', 'categorias')).then(response => {
+      api.query(Prismic.Predicates.at('document.type', 'categorias'), { pageSize : 600 }).then(response => {
     
         if (response) {
           this.setState({ categories: response.results });
@@ -89,8 +89,11 @@ class App extends Component {
   }
 
   getProducts(catId){
+    const [categoria] = this.state.categories.filter(categorie => categorie.uid === catId)
+    
     Prismic.api(this.apiEndpoint).then(api => {    
-      api.query(Prismic.Predicates.at('document.type', 'produtos')).then(response => {
+      api.query([Prismic.Predicates.at('document.type', 'produtos'),Prismic.Predicates.at('my.produtos.categoria', categoria.id)], 
+        { pageSize : 600 }).then(response => {
       
         if (response) {
            let products = response.results.filter( produto => produto.data.categoria.uid === catId )
